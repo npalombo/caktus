@@ -23,9 +23,12 @@ class TestDrillView(TestCase):
         # The form has a text field named "answer"
         self.assertTrue(form.find('input', attrs={'name': 'answer', 'type': 'text'}))
         # The page also offers an escape link to get the answer
-        clue_id = response.context['clue_id']
-        answer_link_url = reverse('xword-answer', args=(clue_id,))
+        clue = response.context['clue']  # Changed to use object rather than id
+        answer_link_url = reverse('xword-answer', args=(clue.id,))
         self.assertTrue(soup.find('a', attrs={'href': answer_link_url}))
+
+        # added to assure 'wrong answer' section does not render
+        self.assertNotContains(response, "not correct")
 
     def test_drill_post_incorrect(self):
         clue = Clue.objects.order_by("?").first()
@@ -52,7 +55,7 @@ class TestDrillView(TestCase):
         self.client.get(self.url)
         self.client.get(self.url)
         response = self.client.get(self.url)
-        clue = Clue.objects.get(pk=response.context["clue_id"])
+        clue = Clue.objects.get(pk=response.context["clue"].id)
         data = {
             "clue_id": clue.id,
             "answer": clue.entry.entry_text

@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from xword_data import views
+
 urlpatterns = [
+    path('drill', views.drill, name='xword-drill'),
+    path('answer/<int:clue_id>', views.answer, name='xword-answer'),
     path('admin/', admin.site.urls),
 ]

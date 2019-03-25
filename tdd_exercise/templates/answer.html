@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Answer{% endblock %}
+
+{% block content %}
+    <span>{{ clue.entry.entry_text }} is the correct answer! You have now answered 1 (of 3) clues correctly</span>
+    {% if matching_entry_count == 1 %}
+        <span>This is the only appearance of this clue</span>
+    {% else %}
+    <table>
+        <thead>
+            <tr><th>Count</th><th>Entry</th></tr>
+        </thead>
+        <tbody>
+            {% for matching_entry in matching_entries %}
+            <tr><td>{{ matching_entry.count }}</td><td>{{ matching_entry.entry_text }}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock %}

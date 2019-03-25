@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Drill{% endblock %}
+
+{% block content %}
+    <form action="{% url 'xword-drill' %}" method="post">
+        <label for="answer">Answer: </label><input type="text" name="answer" id="answer"/>
+        <input type="hidden" name="clue_id" value="{{ clue.id }}"/>
+    </form>
+
+    {% if wrong_answer %}
+        {{ wrong_answer }} is not correct
+    {% endif %}
+
+    <a href="{% url 'xword-answer' clue.id %}">See Answer</a>
+{% endblock %}
