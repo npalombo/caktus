@@ -11,7 +11,7 @@ class PuzzleFactory(factory.django.DjangoModelFactory):
         model = Puzzle
 
     title = factory.Faker("sentence")
-    date = factory.Faker("past_date", start_date=datetime.date(1970, 1, 1))
+    publication_date = factory.Faker("past_date", start_date=datetime.date(1970, 1, 1))
     byline = factory.Faker("name")
     publisher = factory.Faker("random_element", elements=("NYT", "NYSun", "LAT", "WaPo", "USAToday"))
 
