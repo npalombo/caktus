@@ -15,7 +15,7 @@ def drill(request):
     if request.method == 'GET':
         clue_count = Clue.objects.all().count()
         random_index = random.randint(0, clue_count-1)
-        clue = Clue.objects.all()[random_index]
+        clue = Clue.objects.select_related('entry', 'puzzle').all()[random_index]
         context['clue'] = clue
     elif request.method == 'POST':
         clue_id = request.POST.get('clue_id')

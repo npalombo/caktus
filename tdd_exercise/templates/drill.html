@@ -3,14 +3,27 @@
 {% block title %}Drill{% endblock %}
 
 {% block content %}
+    <div>Clue:&nbsp;{{ clue.clue_text }}</div>
+    <div>Answer length:&nbsp;{{ clue.entry.entry_text|length }}</div>
+    {% if clue.puzzle.title %}
+    <div>Title:&nbsp;{{ clue.puzzle.title }}</div>
+    {% endif %}
+    <div>By:&nbsp;{{ clue.puzzle.byline }}</div>
+    <div>Published by:&nbsp;{{ clue.puzzle.publisher }}</div>
+    <div>Published on:&nbsp;{{ clue.puzzle.publication_date|date:"M d, Y" }}</div>
+    <div>
     <form action="{% url 'xword-drill' %}" method="post">
+        {% csrf_token %}
         <label for="answer">Answer: </label><input type="text" name="answer" id="answer"/>
         <input type="hidden" name="clue_id" value="{{ clue.id }}"/>
+        <button type="submit">Submit Answer</button>
     </form>
+    </div>
 
     {% if wrong_answer %}
-        {{ wrong_answer }} is not correct
+    <div>{{ wrong_answer }} is not correct</div>
     {% endif %}
 
-    <a href="{% url 'xword-answer' clue.id %}">See Answer</a>
+    <div><a href="{% url 'xword-answer' clue.id %}">See Answer</a></div>
+    <div><a href="{% url 'xword-drill' %}">New Clue</a></div>
 {% endblock %}
